@@ -1,10 +1,6 @@
 import jsonplaceholder.json as jsonplaceholder ~swagger
 
-jsonplaceholder:
-    @package = "jsonplaceholder"
-
 simple:
-    @package="simple"
     /foobar:
         GET:
             jsonplaceholder <- GET /todos/{id}
