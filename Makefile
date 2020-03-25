@@ -30,19 +30,21 @@ ROOT=$(shell pwd)
 .PHONY: setup clean gen
 sysl: clean setup gen downstream format
 
-# try to clone, then try to fetch and pull
+# Create the output directories
 setup:
 	mkdir -p ${outdir}/${app}
 	$(foreach path, $(dependencies), $(shell mkdir -p ${outdir}/$(path)))
     $(foreach path, $(app), $(shell mkdir -p ${outdir}/$(path)))
 
-# Generate files with internal git service
+# Generate code for the server endpoints
 gen:
 	$(foreach file, $(TRANSFORMS), $(shell sysl codegen --root=$(ROOT) --basepath=$(basepath)/${outdir}/ --transform $(TRANSLOCATION)/$(file) --grammar ${GRAMMAR} --start ${START} --outdir=${outdir}/${app} --app-name ${app} $(input)))
 
+# Generate code for the downstream clients
 downstream:
 	$(foreach file, $(DOWNSTREAMTRANSFORMS), $(foreach downstream, $(dependencies), $(shell sysl codegen --root=$(ROOT) --basepath=$(basepath)/${outdir}/ --transform $(TRANSLOCATION)/$(file) --grammar ${GRAMMAR} --start ${START} --outdir=${outdir}/${downstream} --app-name ${downstream} $(input))))
 
+# Formats the generated code
 format:
 	gofmt -s -w ${outdir}/${app}/*
 	goimports -w ${outdir}/${app}/*
@@ -53,6 +55,6 @@ format:
 clean:
 	rm -rf $(outdir)
 
-# Build ###########
+# Builds the binary
 server:
 	go build -o bin/sysl-template main.go
