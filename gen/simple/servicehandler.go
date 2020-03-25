@@ -12,6 +12,7 @@ import (
 
 // Handler interface for simple
 type Handler interface {
+	GetHandler(w http.ResponseWriter, r *http.Request)
 	GetFoobarListHandler(w http.ResponseWriter, r *http.Request)
 }
 
@@ -25,6 +26,38 @@ type ServiceHandler struct {
 // NewServiceHandler for simple
 func NewServiceHandler(genCallback GenCallback, serviceInterface *ServiceInterface, jsonplaceholderjsonplaceholderService jsonplaceholder.Service) *ServiceHandler {
 	return &ServiceHandler{genCallback, serviceInterface, jsonplaceholderjsonplaceholderService}
+}
+
+// GetHandler ...
+func (s *ServiceHandler) GetHandler(w http.ResponseWriter, r *http.Request) {
+	if s.serviceInterface.Get == nil {
+		s.genCallback.HandleError(r.Context(), w, common.InternalError, "not implemented", nil)
+		return
+	}
+
+	ctx := common.RequestHeaderToContext(r.Context(), r.Header)
+	ctx = common.RespHeaderAndStatusToContext(ctx, make(http.Header), http.StatusOK)
+	var req GetRequest
+
+	ctx, cancel := s.genCallback.DownstreamTimeoutContext(ctx)
+	defer cancel()
+	valErr := validator.Validate(&req)
+	if valErr != nil {
+		s.genCallback.HandleError(ctx, w, common.BadRequestError, "Invalid request", valErr)
+		return
+	}
+
+	client := GetClient{}
+
+	welcome, err := s.serviceInterface.Get(ctx, &req, client)
+	if err != nil {
+		s.genCallback.HandleError(ctx, w, common.DownstreamUnexpectedResponseError, "Downstream failure", err)
+		return
+	}
+
+	headermap, httpstatus := common.RespHeaderAndStatusFromContext(ctx)
+	restlib.SetHeaders(w, headermap)
+	restlib.SendHTTPResponse(w, httpstatus, welcome)
 }
 
 // GetFoobarListHandler ...
