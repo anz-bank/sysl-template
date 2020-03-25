@@ -5,7 +5,7 @@ app = simple
 dependencies = jsonplaceholder # this can be a list separated by a space or left empty
 outdir = gen
 # Current go import path
-basepath = github.com/anz-bank/sysltemplate
+basepath = github.com/anz-bank/sysl-template
 
 ####################################################################
 #                                                                  #
@@ -58,4 +58,4 @@ clean:
 
 # Build ###########
 server:
-	go build -o bin/sysltemplate main.go
+	go build -o bin/sysl-template main.go

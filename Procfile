@@ -1,1 +1,1 @@
-web: bin/sysltemplate
+web: bin/sysl-template

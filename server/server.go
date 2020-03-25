@@ -10,9 +10,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/anz-bank/sysltemplate/gen/jsonplaceholder"
-	"github.com/anz-bank/sysltemplate/gen/simple"
-	"github.com/anz-bank/sysltemplate/pkg/defaultcallback"
+	"github.com/anz-bank/sysl-template/gen/jsonplaceholder"
+	"github.com/anz-bank/sysl-template/gen/simple"
+	"github.com/anz-bank/sysl-template/pkg/defaultcallback"
 	"github.com/go-chi/chi"
 )
 
