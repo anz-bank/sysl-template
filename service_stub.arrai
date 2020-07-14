@@ -1,0 +1,3 @@
+let [_, basepath, json, appname, groups] = //os.args;
+let service = //{github.com/anz-bank/sysl-go/codegen/arrai/service.arrai};
+service

@@ -1,0 +1,16 @@
+# frontend specifications
+import petdemo.yaml as petdemo.Petdemo
+
+# backend specifications
+import ../../backend/petstore/petstore.yaml as petstore.Petstore
+import ../../backend/flickr/flickr.yaml as flickr.Flickr
+
+
+Petdemo "Petdemo":
+    /random-pet-pic:
+        GET:
+            | Get a random pet pic from the petstore
+            Petstore <- GET /pets
+            Flickr <- GET /rest
+            return error <: GenericError
+            return ok <: PetResponse
