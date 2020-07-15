@@ -46,10 +46,6 @@ func ListenAndServe(cfg *ConfigContainer) error {
 		core.WithPrometheusRegistry(prometheus.NewRegistry())).Start()
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * rest manager
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
 // restManager
 type restManager struct {
 	config              *ConfigContainer

@@ -10,7 +10,7 @@ import (
 func TestReadGetPetsList(t *testing.T) {
 	req := flickr.GetRestListRequest{}
 	client := flickr.GetRestListClient{}
-	req.Method = newString("flickr%2Ephotos%2Esearch")
+	req.Method = newString("flickr.photos.search")
 	req.Tags = newString("dog")
 
 	// get the pet photo list

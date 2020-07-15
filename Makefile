@@ -3,7 +3,8 @@ ARRAI  =  ./arraiw
 CODEGEN_ROOT = internal/gen
 SPECS_ROOT = specs/frontend/petdemo
 
-.PHONY: all
+# -- Generate --------------------------------------------------------------------
+
 gen: backend-gen frontend-gen
 
 # frontend code
@@ -51,3 +52,47 @@ define run-codegen
 		$< $($(word 2,$^)) | tar xf - -C $(CODEGEN_ROOT)/$(shell echo $< | tr A-Z a-z)
 	goimports -w $(CODEGEN_ROOT)/$(shell echo $< | tr A-Z a-z)
 endef
+
+# -- Build ---------------------------------------------------------------------
+
+build: build-flickr build-petstore build-petdemo
+
+.PHONY: build-flickr
+build-flickr:
+	go mod tidy
+	go build -v -o flickrserver ./cmd/flickrserver
+
+.PHONY: build-petstore
+build-petstore:
+	go mod tidy
+	go build -v -o petstoreserver ./cmd/petstoreserver
+
+.PHONY: build-petdemo
+build-petdemo:
+	go mod tidy
+	go build -v -o petdemoserver ./cmd/petdemoserver
+
+install:  ## Install the server binary
+	go install ./...
+
+.PHONY: build build-petstore
+.PHONY: build build-flickr
+.PHONY: build build-petdemo
+
+.PHONY: install
+
+# -- Test ---------------------------------------------------------------------
+
+test: build-flickr build-petstore build-petdemo  ## Execute application unit tests
+	go test -race -coverprofile=$(COVERFILE) ./...
+
+.PHONY: test
+
+# -- Run ---------------------------------------------------------------------
+
+run:  ## Run the server
+	go run cmd/flickrserver/main.go flickr &
+	go run cmd/petstoreserver/main.go petstore &
+	go run cmd/petdemoserver/main.go petdemo &
+
+.PHONY: run
