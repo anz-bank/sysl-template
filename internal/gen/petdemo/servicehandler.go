@@ -52,11 +52,11 @@ func (s *ServiceHandler) GetRandomPetPicListHandler(w http.ResponseWriter, r *ht
 	}
 
 	client := GetRandomPetPicListClient{
-		GetPetsList: s.petstorePetstoreService.GetPetsList,
+		GetPetList:  s.petstorePetstoreService.GetPetList,
 		GetRestList: s.flickrFlickrService.GetRestList,
 	}
 
-	petresponse, petresponse, err := s.serviceInterface.GetRandomPetPicList(ctx, &req, client)
+	petresponse, err := s.serviceInterface.GetRandomPetPicList(ctx, &req, client)
 	if err != nil {
 
 		common.HandleError(ctx, w, common.DownstreamUnexpectedResponseError, "Downstream failure", err, s.genCallback.MapError)
@@ -65,5 +65,5 @@ func (s *ServiceHandler) GetRandomPetPicListHandler(w http.ResponseWriter, r *ht
 
 	headermap, httpstatus := common.RespHeaderAndStatusFromContext(ctx)
 	restlib.SetHeaders(w, headermap)
-	restlib.SendHTTPResponse(w, httpstatus, petresponse, petresponse)
+	restlib.SendHTTPResponse(w, httpstatus, petresponse)
 }

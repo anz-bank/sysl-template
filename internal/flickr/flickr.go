@@ -1,4 +1,4 @@
-package petdemo
+package flickr
 
 import (
 	"context"
@@ -9,8 +9,8 @@ import (
 	"github.com/anz-bank/sysl-go/config"
 	"github.com/anz-bank/sysl-go/core"
 	"github.com/anz-bank/sysl-go/handlerinitialiser"
-	"github.com/anz-bank/sysl-template/internal/gen/petdemo"
-	"github.com/anz-bank/sysl-template/internal/petdemo/handlers"
+	"github.com/anz-bank/sysl-template/internal/flickr/handlers"
+	"github.com/anz-bank/sysl-template/internal/gen/flickr"
 	"github.com/go-chi/chi"
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -18,30 +18,29 @@ import (
 // ListenAndServe func
 func ListenAndServe(cfg *ConfigContainer) error {
 	// construct the mapping from endpoint to handler
-	si := petdemo.ServiceInterface{
-		GetRandomPetPicList: handlers.GetRandomPetPicListRead{}.GetRandomPetPicListRead,
+	si := flickr.ServiceInterface{
+		GetRestList: handlers.GetRestListRead{}.GetRestListRead,
 	}
 
 	// construct the rest configuration (aka. gen callback)
 	restConfig := restGenCallback{
-		UpstreamTimeout:   cfg.GenCode.Upstream.ContextTimeout,
-		DownstreamTimeout: cfg.GenCode.Downstream.(*petdemo.DownstreamConfig).ContextTimeout,
-		RouterBasePath:    "/",
-		UpstreamConfig:    &cfg.GenCode.Upstream,
+		UpstreamTimeout: cfg.GenCode.Upstream.ContextTimeout,
+		RouterBasePath:  "/",
+		UpstreamConfig:  &cfg.GenCode.Upstream,
 	}
 
 	// construct the downstream clients
-	clients, err := petdemo.BuildDownstreamClients(&cfg.DefaultConfig)
+	clients, err := flickr.BuildDownstreamClients(&cfg.DefaultConfig)
 	if err != nil {
 		return err
 	}
 
 	// construct the service router
-	serviceRouter := petdemo.BuildRestHandlerInitialiser(si, restConfig, clients)
+	serviceRouter := flickr.BuildRestHandlerInitialiser(si, restConfig, clients)
 
 	// start the server
 	restManager := newRestManager(cfg, serviceRouter)
-	return core.NewServerParams(context.Background(), "petdemo",
+	return core.NewServerParams(context.Background(), "FLICKR",
 		core.WithPkgLogger(),
 		core.WithRestManager(restManager),
 		core.WithPrometheusRegistry(prometheus.NewRegistry())).Start()

@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/anz-bank/sysl-go/common"
-	"github.com/anz-bank/sysl-go/convert"
 	"github.com/anz-bank/sysl-go/core"
 	"github.com/anz-bank/sysl-go/restlib"
 	"github.com/anz-bank/sysl-go/validator"
@@ -13,7 +12,7 @@ import (
 
 // Handler interface for Petstore
 type Handler interface {
-	GetPetsListHandler(w http.ResponseWriter, r *http.Request)
+	GetPetListHandler(w http.ResponseWriter, r *http.Request)
 }
 
 // ServiceHandler for Petstore API
@@ -28,26 +27,16 @@ func NewServiceHandler(genCallback core.RestGenCallback, serviceInterface *Servi
 	return &ServiceHandler{genCallback, serviceInterface}
 }
 
-// GetPetsListHandler ...
-func (s *ServiceHandler) GetPetsListHandler(w http.ResponseWriter, r *http.Request) {
-	if s.serviceInterface.GetPetsList == nil {
+// GetPetListHandler ...
+func (s *ServiceHandler) GetPetListHandler(w http.ResponseWriter, r *http.Request) {
+	if s.serviceInterface.GetPetList == nil {
 		common.HandleError(r.Context(), w, common.InternalError, "not implemented", nil, s.genCallback.MapError)
 		return
 	}
 
 	ctx := common.RequestHeaderToContext(r.Context(), r.Header)
 	ctx = common.RespHeaderAndStatusToContext(ctx, make(http.Header), http.StatusOK)
-	var req GetPetsListRequest
-
-	var LimitParam string
-
-	var convErr error
-	LimitParam = restlib.GetQueryParam(r, "limit")
-	req.Limit, convErr = convert.StringToIntPtr(ctx, LimitParam)
-	if convErr != nil {
-		common.HandleError(ctx, w, common.BadRequestError, "Invalid request", convErr, s.genCallback.MapError)
-		return
-	}
+	var req GetPetListRequest
 
 	ctx, cancel := s.genCallback.DownstreamTimeoutContext(ctx)
 	defer cancel()
@@ -57,9 +46,9 @@ func (s *ServiceHandler) GetPetsListHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	client := GetPetsListClient{}
+	client := GetPetListClient{}
 
-	pet, err := s.serviceInterface.GetPetsList(ctx, &req, client)
+	pet, err := s.serviceInterface.GetPetList(ctx, &req, client)
 	if err != nil {
 
 		common.HandleError(ctx, w, common.DownstreamUnexpectedResponseError, "Downstream failure", err, s.genCallback.MapError)

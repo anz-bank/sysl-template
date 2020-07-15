@@ -7,27 +7,19 @@ info:
 servers:
   - url: http://petstore.swagger.io/v1
 paths:
-  /pets:
+  /pet:
     get:
-      summary: List all pets
-      operationId: listPets
+      summary: Get random pet
+      operationId: getPet
       tags:
-        - pets
-      parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 100)
-          required: false
-          schema:
-            type: integer
-            format: int32
+        - pet
       responses:
         "200":
-          description: A paged array of pets
+          description: A random pet
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Pets"
+                $ref: "#/components/schemas/Pet"
         default:
           description: unexpected error
           content:
@@ -49,10 +41,6 @@ components:
           type: string
         tag:
           type: string
-    Pets:
-      type: array
-      items:
-        $ref: "#/components/schemas/Pet"
     Error:
       type: object
       required:

@@ -14,7 +14,7 @@ frontend-gen: petdemo-gen
 .PHONY: Petdemo
 PETDEMO = Petdemo
 
-frontend = rest-service
+frontend = rest-app
 .PHONY: petdemo-gen
 petdemo-gen: $(PETDEMO) frontend
 	$(run-codegen)
@@ -39,7 +39,7 @@ petstore-gen: $(PETSTORE) backend
 	$(run-codegen)
 
 SYSL_TEMPLATE_ROOT = github.com/anz-bank/sysl-template
-backend = rest-service
+backend = rest-app
 
 define run-codegen
 	rm -rf $(CODEGEN_ROOT)/$(shell echo $< | tr A-Z a-z)

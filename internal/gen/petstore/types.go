@@ -55,9 +55,8 @@ func (t *Pet) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GetPetsListRequest ...
-type GetPetsListRequest struct {
-	Limit *int64
+// GetPetListRequest ...
+type GetPetListRequest struct {
 }
 
 // *Error validator
@@ -69,6 +68,3 @@ func (s *Error) Validate() error {
 func (s *Pet) Validate() error {
 	return validator.Validate(s)
 }
-
-// Pets ...
-type Pets []Pet

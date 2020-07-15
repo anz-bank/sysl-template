@@ -32,47 +32,33 @@ func NewClient(client *http.Client, serviceURL string) *Client {
 func (s *Client) GetRandomPetPicList(ctx context.Context, req *GetRandomPetPicListRequest) (*PetResponse, error) {
 	required := []string{}
 	var okResponse PetResponse
-
-	var okResponse PetResponse
-	var errorResponse GenericError
-
 	var errorResponse GenericError
 	u, err := url.Parse(fmt.Sprintf("%s/random-pet-pic", s.url))
 	if err != nil {
-		return nil, nil, common.CreateError(ctx, common.InternalError, "failed to parse url", err)
+		return nil, common.CreateError(ctx, common.InternalError, "failed to parse url", err)
 	}
 
 	result, err := restlib.DoHTTPRequest(ctx, s.client, "GET", u.String(), nil, required, &okResponse, &errorResponse)
 	if err != nil {
 		response, ok := err.(*restlib.HTTPResult)
 		if !ok {
-			return nil, nil, common.CreateError(ctx, common.DownstreamUnavailableError, "call failed: Petdemo <- GET "+u.String(), err)
+			return nil, common.CreateError(ctx, common.DownstreamUnavailableError, "call failed: Petdemo <- GET "+u.String(), err)
 		}
-		return nil, nil, common.CreateDownstreamError(ctx, common.DownstreamResponseError, response.HTTPResponse, response.Body, &errorResponse)
+		return nil, common.CreateDownstreamError(ctx, common.DownstreamResponseError, response.HTTPResponse, response.Body, &errorResponse)
 	}
 
 	if result.HTTPResponse.StatusCode == http.StatusUnauthorized {
-		return nil, nil, common.CreateDownstreamError(ctx, common.DownstreamUnauthorizedError, result.HTTPResponse, result.Body, nil)
+		return nil, common.CreateDownstreamError(ctx, common.DownstreamUnauthorizedError, result.HTTPResponse, result.Body, nil)
 	}
 	OkPetResponseResponse, ok := result.Response.(*PetResponse)
 	if ok {
 		valErr := validator.Validate(OkPetResponseResponse)
 		if valErr != nil {
-			return nil, nil, common.CreateDownstreamError(ctx, common.DownstreamUnexpectedResponseError, result.HTTPResponse, result.Body, valErr)
+			return nil, common.CreateDownstreamError(ctx, common.DownstreamUnexpectedResponseError, result.HTTPResponse, result.Body, valErr)
 		}
 
 		return OkPetResponseResponse, nil
 	}
 
-	OkPetResponseResponse, ok := result.Response.(*PetResponse)
-	if ok {
-		valErr := validator.Validate(OkPetResponseResponse)
-		if valErr != nil {
-			return nil, nil, common.CreateDownstreamError(ctx, common.DownstreamUnexpectedResponseError, result.HTTPResponse, result.Body, valErr)
-		}
-
-		return OkPetResponseResponse, nil
-	}
-
-	return nil, nil, common.CreateDownstreamError(ctx, common.DownstreamUnexpectedResponseError, result.HTTPResponse, result.Body, nil)
+	return nil, common.CreateDownstreamError(ctx, common.DownstreamUnexpectedResponseError, result.HTTPResponse, result.Body, nil)
 }

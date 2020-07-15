@@ -15,13 +15,13 @@ func NewDefaultPetstoreImpl() *DefaultPetstoreImpl {
 	return &DefaultPetstoreImpl{}
 }
 
-// GetPetsList Client
-type GetPetsListClient struct {
+// GetPetList Client
+type GetPetListClient struct {
 }
 
 // ServiceInterface for Petstore
 type ServiceInterface struct {
-	GetPetsList func(ctx context.Context, req *GetPetsListRequest, client GetPetsListClient) (*[]Pet, error)
+	GetPetList func(ctx context.Context, req *GetPetListRequest, client GetPetListClient) (*Pet, error)
 }
 
 // DownstreamConfig for Petstore

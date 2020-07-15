@@ -12,8 +12,6 @@ paths:
     get:
       description: Get a random pet pic from the petstore
       operationId: getRandomPetPic
-      security:
-        - api_key: []
       responses:
         "200":
           description: Successfully retrieves a random pet image
@@ -73,9 +71,3 @@ components:
       required:
         - code
         - description
-
-  securitySchemes:
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header

@@ -6,17 +6,16 @@ import (
 	"github.com/anz-bank/sysl-template/internal/gen/flickr"
 )
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * read restlist from flickr
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// Handler for reading photos from flickr
 type GetRestListRead struct{}
 
+// GetRestListRead reads photos from flickr
 func (h GetRestListRead) GetRestListRead(ctx context.Context,
 	getRestListRequest *flickr.GetRestListRequest,
 	client flickr.GetRestListClient) (*flickr.PhotoResource, error) {
 	setJSONResponseContentType(ctx)
 
-	if *getRestListRequest.Method == "flickr%2Ephotos%2Esearch" {
+	if *getRestListRequest.Method == "flickr.photos.search" {
 		switch *getRestListRequest.Tags {
 		case "dog":
 			return &flickr.PhotoResource{

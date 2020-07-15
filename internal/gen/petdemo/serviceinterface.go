@@ -21,13 +21,13 @@ func NewDefaultPetdemoImpl() *DefaultPetdemoImpl {
 
 // GetRandomPetPicList Client
 type GetRandomPetPicListClient struct {
-	GetPetsList func(ctx context.Context, req *petstore.GetPetsListRequest) (*petstore.Pet, error)
+	GetPetList  func(ctx context.Context, req *petstore.GetPetListRequest) (*petstore.Pet, error)
 	GetRestList func(ctx context.Context, req *flickr.GetRestListRequest) (*flickr.PhotoResource, error)
 }
 
 // ServiceInterface for Petdemo
 type ServiceInterface struct {
-	GetRandomPetPicList func(ctx context.Context, req *GetRandomPetPicListRequest, client GetRandomPetPicListClient) (*PetResponse, *PetResponse, error)
+	GetRandomPetPicList func(ctx context.Context, req *GetRandomPetPicListRequest, client GetRandomPetPicListClient) (*PetResponse, error)
 }
 
 // DownstreamConfig for Petdemo

@@ -1,4 +1,4 @@
-package petdemo
+package flickr
 
 import (
 	"github.com/anz-bank/sysl-go/config"

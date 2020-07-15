@@ -1,5 +1,5 @@
 # frontend specifications
-import petdemo.yaml as petdemo.Petdemo
+import petdemo.yaml as Petdemo
 
 # backend specifications
 import ../../backend/petstore/petstore.yaml as petstore.Petstore
@@ -10,7 +10,6 @@ Petdemo "Petdemo":
     /random-pet-pic:
         GET:
             | Get a random pet pic from the petstore
-            Petstore <- GET /pets
+            Petstore <- GET /pet
             Flickr <- GET /rest
-            return error <: GenericError
-            return ok <: PetResponse
+            ...

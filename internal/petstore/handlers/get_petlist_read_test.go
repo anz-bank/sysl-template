@@ -8,8 +8,8 @@ import (
 )
 
 func TestReadGetPetsList(t *testing.T) {
-	req := petstore.GetPetsListRequest{}
-	client := petstore.GetPetsListClient{}
+	req := petstore.GetPetListRequest{}
+	client := petstore.GetPetListClient{}
 
 	// get the pet list
 	response, err := GetPetsListRead{}.GetPetsListRead(newRequestContext(), &req, client)

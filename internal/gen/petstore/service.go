@@ -14,7 +14,7 @@ import (
 
 // Service interface for Petstore
 type Service interface {
-	GetPetsList(ctx context.Context, req *GetPetsListRequest) (*Pet, error)
+	GetPetList(ctx context.Context, req *GetPetListRequest) (*Pet, error)
 }
 
 // Client for Petstore API
@@ -28,22 +28,16 @@ func NewClient(client *http.Client, serviceURL string) *Client {
 	return &Client{client, serviceURL}
 }
 
-// GetPetsList ...
-func (s *Client) GetPetsList(ctx context.Context, req *GetPetsListRequest) (*Pet, error) {
+// GetPetList ...
+func (s *Client) GetPetList(ctx context.Context, req *GetPetListRequest) (*Pet, error) {
 	required := []string{}
 	var okResponse Pet
 	var errorResponse Error
-	u, err := url.Parse(fmt.Sprintf("%s/pets", s.url))
+	u, err := url.Parse(fmt.Sprintf("%s/pet", s.url))
 	if err != nil {
 		return nil, common.CreateError(ctx, common.InternalError, "failed to parse url", err)
 	}
 
-	q := u.Query()
-	if req.Limit != nil {
-		q.Add("limit", fmt.Sprintf("%v", *req.Limit))
-	}
-
-	u.RawQuery = q.Encode()
 	result, err := restlib.DoHTTPRequest(ctx, s.client, "GET", u.String(), nil, required, &okResponse, &errorResponse)
 	if err != nil {
 		response, ok := err.(*restlib.HTTPResult)

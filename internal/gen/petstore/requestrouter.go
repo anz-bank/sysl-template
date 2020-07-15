@@ -40,7 +40,7 @@ func NewServiceRouter(gc core.RestGenCallback, svcHandler *ServiceHandler) handl
 func (s *ServiceRouter) WireRoutes(ctx context.Context, r chi.Router) {
 	r.Route(core.SelectBasePath(s.basePathFromSpec, s.gc.BasePath()), func(r chi.Router) {
 		s.gc.AddMiddleware(ctx, r)
-		r.Get("/pets", s.svcHandler.GetPetsListHandler)
+		r.Get("/pet", s.svcHandler.GetPetListHandler)
 	})
 }
 

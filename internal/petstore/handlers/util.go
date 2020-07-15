@@ -7,7 +7,7 @@ import (
 	"github.com/anz-bank/sysl-go/common"
 )
 
-//  return a string ptr
+//  newString creates a string ptr
 func newString(s string) *string {
 	return &s
 }
@@ -18,7 +18,7 @@ func setJSONResponseContentType(ctx context.Context) {
 	headers["Content-Type"] = []string{"application/json; charset=utf-8"}
 }
 
-// create a new request context
+// newRequestContext creates a new request context
 func newRequestContext() context.Context {
 	headers := http.Header{}
 	ctx := context.Background()
