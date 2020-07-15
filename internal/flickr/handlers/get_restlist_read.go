@@ -3,131 +3,129 @@ package handlers
 import (
 	"context"
 
+	util "github.com/anz-bank/sysl-template/internal"
 	"github.com/anz-bank/sysl-template/internal/gen/flickr"
 )
 
-// Handler for reading photos from flickr
-type GetRestListRead struct{}
-
 // GetRestListRead reads photos from flickr
-func (h GetRestListRead) GetRestListRead(ctx context.Context,
+func GetRestListRead(ctx context.Context,
 	getRestListRequest *flickr.GetRestListRequest,
 	client flickr.GetRestListClient) (*flickr.PhotoResource, error) {
-	setJSONResponseContentType(ctx)
+	util.SetJSONResponseContentType(ctx)
 
 	if *getRestListRequest.Method == "flickr.photos.search" {
 		switch *getRestListRequest.Tags {
 		case "dog":
 			return &flickr.PhotoResource{
-				Page:    newFloat64(1),
-				Pages:   newFloat64(1),
-				Perpage: newFloat64(3),
+				Page:    util.NewFloat64(1),
+				Pages:   util.NewFloat64(1),
+				Perpage: util.NewFloat64(3),
 				Photos: []flickr.Photo{
 					{
-						ID: newString("white golden retriever"),
+						ID: util.NewString("white golden retriever"),
 						Tags: &flickr.Photo_tags{
 							Tag: []flickr.Tag{
 								{
-									Raw: newString("dog"),
+									Raw: util.NewString("dog"),
 								},
 							},
 						},
 						Urls: &flickr.Photo_urls{
 							URL: []flickr.URL{
 								{
-									Type: newString("http://www.example.com/dog/wgr"),
+									Type: util.NewString("http://www.example.com/dog/wgr"),
 								},
 							},
 						},
 					},
 					{
-						ID: newString("I am JJ's dog Bingo"),
+						ID: util.NewString("I am JJ's dog Bingo"),
 						Tags: &flickr.Photo_tags{
 							Tag: []flickr.Tag{
 								{
-									Raw: newString("dog"),
+									Raw: util.NewString("dog"),
 								},
 							},
 						},
 						Urls: &flickr.Photo_urls{
 							URL: []flickr.URL{
 								{
-									Type: newString("http://www.example.com/dog/bingo"),
+									Type: util.NewString("http://www.example.com/dog/bingo"),
 								},
 							},
 						},
 					},
 				},
-				Total: newFloat64(2),
+				Total: util.NewFloat64(2),
 			}, nil
 		case "cat":
 			return &flickr.PhotoResource{
-				Page:    newFloat64(1),
-				Pages:   newFloat64(1),
-				Perpage: newFloat64(3),
+				Page:    util.NewFloat64(1),
+				Pages:   util.NewFloat64(1),
+				Perpage: util.NewFloat64(3),
 				Photos: []flickr.Photo{
 					{
-						ID: newString("White cat"),
+						ID: util.NewString("White cat"),
 						Tags: &flickr.Photo_tags{
 							Tag: []flickr.Tag{
 								{
-									Raw: newString("cat"),
+									Raw: util.NewString("cat"),
 								},
 							},
 						},
 						Urls: &flickr.Photo_urls{
 							URL: []flickr.URL{
 								{
-									Type: newString("http://www.example.com/cat/wc"),
+									Type: util.NewString("http://www.example.com/cat/wc"),
 								},
 							},
 						},
 					},
 					{
-						ID: newString("Black cat"),
+						ID: util.NewString("Black cat"),
 						Tags: &flickr.Photo_tags{
 							Tag: []flickr.Tag{
 								{
-									Raw: newString("cat"),
+									Raw: util.NewString("cat"),
 								},
 							},
 						},
 						Urls: &flickr.Photo_urls{
 							URL: []flickr.URL{
 								{
-									Type: newString("http://www.example.com/cat/bc"),
+									Type: util.NewString("http://www.example.com/cat/bc"),
 								},
 							},
 						},
 					},
 				},
-				Total: newFloat64(2),
+				Total: util.NewFloat64(2),
 			}, nil
 		case "rabbit":
 			return &flickr.PhotoResource{
-				Page:    newFloat64(1),
-				Pages:   newFloat64(1),
-				Perpage: newFloat64(3),
+				Page:    util.NewFloat64(1),
+				Pages:   util.NewFloat64(1),
+				Perpage: util.NewFloat64(3),
 				Photos: []flickr.Photo{
 					{
-						ID: newString("I am peter rabbit"),
+						ID: util.NewString("I am peter rabbit"),
 						Tags: &flickr.Photo_tags{
 							Tag: []flickr.Tag{
 								{
-									Raw: newString("rabbit"),
+									Raw: util.NewString("rabbit"),
 								},
 							},
 						},
 						Urls: &flickr.Photo_urls{
 							URL: []flickr.URL{
 								{
-									Type: newString("http://www.example.com/rabbit/pr"),
+									Type: util.NewString("http://www.example.com/rabbit/pr"),
 								},
 							},
 						},
 					},
 				},
-				Total: newFloat64(2),
+				Total: util.NewFloat64(2),
 			}, nil
 		}
 	}

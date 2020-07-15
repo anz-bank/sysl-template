@@ -19,7 +19,7 @@ import (
 func ListenAndServe(cfg *ConfigContainer) error {
 	// construct the mapping from endpoint to handler
 	si := petdemo.ServiceInterface{
-		GetRandomPetPicList: handlers.GetRandomPetPicListRead{}.GetRandomPetPicListRead,
+		GetRandomPetPicList: handlers.GetRandomPetPicListRead,
 	}
 
 	// construct the rest configuration (aka. gen callback)

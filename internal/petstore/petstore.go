@@ -19,7 +19,7 @@ import (
 func ListenAndServe(cfg *ConfigContainer) error {
 	// construct the mapping from endpoint to handler
 	si := petstore.ServiceInterface{
-		GetPetList: handlers.GetPetsListRead{}.GetPetsListRead,
+		GetPetList: handlers.GetPetsListRead,
 	}
 
 	// construct the rest configuration (aka. gen callback)

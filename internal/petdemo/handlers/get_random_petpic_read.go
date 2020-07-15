@@ -3,19 +3,17 @@ package handlers
 import (
 	"context"
 
+	util "github.com/anz-bank/sysl-template/internal"
 	"github.com/anz-bank/sysl-template/internal/gen/flickr"
 	"github.com/anz-bank/sysl-template/internal/gen/petdemo"
 	"github.com/anz-bank/sysl-template/internal/gen/petstore"
 )
 
-// Handler for fetching random pet pic
-type GetRandomPetPicListRead struct{}
-
 // GetRandomPetPicListRead reads random pic from downstream
-func (h GetRandomPetPicListRead) GetRandomPetPicListRead(ctx context.Context,
+func GetRandomPetPicListRead(ctx context.Context,
 	getRandomPetPicListRequest *petdemo.GetRandomPetPicListRequest,
 	client petdemo.GetRandomPetPicListClient) (*petdemo.PetResponse, error) {
-	setJSONResponseContentType(ctx)
+	util.SetJSONResponseContentType(ctx)
 	reqPetstore := petstore.GetPetListRequest{}
 	// get the pet list
 	pet, err := client.GetPetList(ctx, &reqPetstore)
@@ -23,8 +21,8 @@ func (h GetRandomPetPicListRead) GetRandomPetPicListRead(ctx context.Context,
 		return nil, err
 	}
 	reqFlickr := flickr.GetRestListRequest{
-		Method: newString("flickr.photos.search"),
-		Tags:   newString(*pet.Tag),
+		Method: util.NewString("flickr.photos.search"),
+		Tags:   util.NewString(*pet.Tag),
 	}
 	photo, err := client.GetRestList(ctx, &reqFlickr)
 	if err != nil {

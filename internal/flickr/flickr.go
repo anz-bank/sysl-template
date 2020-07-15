@@ -19,7 +19,7 @@ import (
 func ListenAndServe(cfg *ConfigContainer) error {
 	// construct the mapping from endpoint to handler
 	si := flickr.ServiceInterface{
-		GetRestList: handlers.GetRestListRead{}.GetRestListRead,
+		GetRestList: handlers.GetRestListRead,
 	}
 
 	// construct the rest configuration (aka. gen callback)

@@ -3,6 +3,7 @@ package handlers
 import (
 	"testing"
 
+	util "github.com/anz-bank/sysl-template/internal"
 	"github.com/anz-bank/sysl-template/internal/gen/petstore"
 	"github.com/stretchr/testify/require"
 )
@@ -12,7 +13,7 @@ func TestReadGetPetsList(t *testing.T) {
 	client := petstore.GetPetListClient{}
 
 	// get the pet list
-	response, err := GetPetsListRead{}.GetPetsListRead(newRequestContext(), &req, client)
+	response, err := GetPetsListRead(util.NewRequestContext(), &req, client)
 
 	// verify the list count
 	require.Nil(t, err)
