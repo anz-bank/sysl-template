@@ -75,10 +75,6 @@ build-petdemo:
 install:  ## Install the server binary
 	go install ./...
 
-.PHONY: build build-petstore
-.PHONY: build build-flickr
-.PHONY: build build-petdemo
-
 .PHONY: install
 
 # -- Test ---------------------------------------------------------------------

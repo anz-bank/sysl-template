@@ -1,9 +1,5 @@
-.sysl-tmp
-bin/
-main
 .DS_Store
 sysl.json
-output*.sysl
 .arrai
 .sysl
 .vscode
