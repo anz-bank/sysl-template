@@ -23,7 +23,7 @@ Congrats! you've just build and run the sysl-go demo application!
 
 ## Development
 
-- Refer to the [Makefile](Makefile) to generate client and server code for all of your applications
+- Refer to the [Makefile](Makefile) to generate client and server code for all of your applications.
 
 ## File structure
 
