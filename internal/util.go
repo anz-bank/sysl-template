@@ -7,12 +7,12 @@ import (
 	"github.com/anz-bank/sysl-go/common"
 )
 
-//  NewString creates a string pointer
+//  NewString creates a string pointer.
 func NewString(s string) *string {
 	return &s
 }
 
-//  NewFloat64 creates a float pointer
+//  NewFloat64 creates a float pointer.
 func NewFloat64(f float64) *float64 {
 	return &f
 }
@@ -23,7 +23,7 @@ func SetJSONResponseContentType(ctx context.Context) {
 	headers["Content-Type"] = []string{"application/json; charset=utf-8"}
 }
 
-// NewRequestContext creates a new request context
+// NewRequestContext creates a new request context.
 func NewRequestContext() context.Context {
 	headers := http.Header{}
 	ctx := context.Background()

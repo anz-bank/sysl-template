@@ -135,10 +135,8 @@ func (c restGenCallback) BasePath() string {
 	return c.RouterBasePath
 }
 
-// timeoutHandler func creates a new timeoutHandler.
+// timeoutHandler handles the timeout of a request.
 func (c restGenCallback) timeoutHandler(w http.ResponseWriter, r *http.Request) {
 	common.HandleError(r.Context(), w, common.InternalError, "timeout expired while processing response", nil,
-		func(ctx context.Context, err error) *common.HTTPError {
-			return nil
-		})
+		c.MapError)
 }

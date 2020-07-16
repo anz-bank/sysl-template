@@ -7,7 +7,7 @@ import (
 	"github.com/anz-bank/sysl-template/internal/gen/flickr"
 )
 
-// GetRestListRead reads photos from flickr
+// GetRestListRead reads photos from Flickr
 func GetRestListRead(ctx context.Context,
 	getRestListRequest *flickr.GetRestListRequest,
 	client flickr.GetRestListClient) (*flickr.PhotoResource, error) {

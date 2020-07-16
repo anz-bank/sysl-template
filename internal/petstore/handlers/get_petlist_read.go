@@ -7,13 +7,13 @@ import (
 	"github.com/anz-bank/sysl-template/internal/gen/petstore"
 )
 
-// GetPetsListRead reads photos from petstore
+// GetPetsListRead fetches a pet from the pet store.
 func GetPetsListRead(ctx context.Context,
 	getPetsListRequest *petstore.GetPetListRequest,
 	client petstore.GetPetListClient) (*petstore.Pet, error) {
 	util.SetJSONResponseContentType(ctx)
 
-	// create the dummy list of pets
+	// create the dummy pet
 	dummyPet := petstore.Pet{
 		ID:   1,
 		Name: "dummy pet dog",
