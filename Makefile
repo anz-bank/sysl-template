@@ -96,3 +96,10 @@ run:  ## Run the server
 	go run cmd/petdemoserver/main.go petdemo &
 
 .PHONY: run
+
+# -- Docs ---------------------------------------------------------------------
+
+.PHONY: docs
+docs:  ## Generate service documentation (requires sysl-catalog installation)
+	rm -r docs/* || true
+	sysl-catalog specs/frontend/petdemo/petdemo.sysl -o docs
