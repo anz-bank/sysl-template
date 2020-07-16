@@ -5,7 +5,7 @@ Demo REST Application generated using Sysl-Go
 ## Prerequisites
 
 - [Sysl v0.140.0 or later ](https://sysl.io/docs/install/)
-- [Arrai v0.87.0 or later](https://github.com/arr-ai/arrai)
+- [Arr.ai v0.87.0 or later](https://github.com/arr-ai/arrai)
 - Go 1.14
 
 ## Building & Running
