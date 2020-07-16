@@ -11,9 +11,9 @@ Demo REST Application generated using Sysl-Go
 ## Building & Running
 
 - run `make gen`. 
-  - This generates the go code.
+  - This generates the Go code.
 - run `make build`. 
-  - This builds the generated code using the installed go runtime.
+  - This builds the generated code using the installed Go runtime.
 - run `make run`.
   - This runs the petdemo app and the downstream apps i.e. flickr and petstore
 - curl http://localhost:8080/random-pet-pic or open in browser.
