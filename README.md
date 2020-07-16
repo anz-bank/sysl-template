@@ -1,50 +1,54 @@
 # sysl-template
 
-Simple REST endpoint generation in Go
+Demo REST Application generated using Sysl-Go
 
 ## Prerequisites
 
-- [Sysl v0.11.0 or later ](https://sysl.io/docs/install/)
-- Go 1.13
+- [Sysl v0.140.0 or later ](https://sysl.io/docs/install/)
+- [Arrai v0.87.0 or later](https://github.com/arr-ai/arrai)
+- Go 1.14
 
-## How to use this template;
+## Building & Running
 
-- Click the `Use this template` button up the top
-- ctrl-f and replace all instances of `github.com/anz-bank/sysl-template` with your import path, eg `github.com/foobar/myrepo`
-- run `make`
-  - note: `make` must be run with a working internet connection, as it fetches transforms and grammars over the network.
-- run   `go run main.go`
-- congrats! you've just made your first sysl application!
+- run `make gen`. 
+  - This generates the go code.
+- run `make build`. 
+  - This builds the generated code using the installed go runtime.
+- run `make run`.
+  - This runs the petdemo app and the downstream apps i.e. flickr and petstore
+- curl http://localhost:8080/random-pet-pic or open in browser.
+  - Output: {"name":"white golden retriever","uri":"http://www.example.com/dog/wgr"}
 
+Congrats! you've just build and run the sysl-go demo application!
 
 ## Development
+
 - Refer to the [Makefile](Makefile) to generate client and server code for all of your applications
 
-## File structure 
+## File structure
 
-api/: contains all API specifications for the generated application
+[internal/gen/petdemo]: Contains the all the generated code for the petdemo app.
+[internal/gen/flickr]: Contains the generated code for the flickr downstream service.
+[internal/gen/petstore]: Contains the generated code for the petstore downstream service.
 
-gen/: contains all the generated code for the service
+[internal/petdemo]: Hand crafted config and server for petdemo app.
+[internal/petdemo/handlers]: Hand crafted handlers for the petdemo app.
 
-[internal/server/server.go](pkg/server/server.go): The hand-written code that's written; Server config and such
+[internal/flickr]: Hand crafted config and server for flickr downstream service.
+[internal/flickr/handlers]: Hand crafted handlers for the flickr downstream service.
 
-pkg/defaultcallback: contains code that sets up the defaults for generated code. (This will no longer be necessary in future Sysl versions)
+[internal/petstore]: Hand crafted config and server for petstore downstream service.
+[internal/petstore/handlers]: Hand crafted handlers for the petstore downstream service.
 
-When new endpoints are added, they need to be added to the `simple.ServiceInterface` variable in [server.go](server/server.go)
+## Configuration
 
-[main.go](main.go): runs the actual server
+The configuration is driven through the yaml files in the repository root.
+  - config-flickr.yml, config-petdemo.yaml and config-petstore.yaml
+The arrai and sysl versions can be locked in the arraiw.properties and syslw.properties files in repository root.
 
+## Application specs
 
-run `make` to regenerate application code
-First you need to edit the start of the Makefile:
-
-```
-input = your input sysl file
-app = < the app you want to develop>
-down = <downstreams in a list separated by spaces>
-basepath = <Your current go module path>
-```
-
-so: `make input=model/simple.sysl app=Simple` for this example
-
-run `go run main.go` to start the server
+The application specs are stored in the form of yaml files in specs directory. 
+- specs/backend/flickr/flickr.yaml
+- specs/backend/petstore/petstore.yaml
+- specs/frontend/petdemo/petdemo.yaml
