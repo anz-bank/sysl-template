@@ -42,8 +42,10 @@ Congrats! you've just build and run the sysl-go demo application!
 
 ## Configuration
 
-The configuration is driven through the yaml files in the repository root.
-  - config-flickr.yml, config-petdemo.yaml and config-petstore.yaml
+The configuration is driven through the YAML files in the repository root.
+- [config-flickr.yml](config-flickr.yml)
+- [config-petdemo.yaml](config-petdemo.yaml)
+- [config-petstore.yaml](config-petstore.yaml)
 The arrai and sysl versions can be locked in the arraiw.properties and syslw.properties files in repository root.
 
 ## Application specs
