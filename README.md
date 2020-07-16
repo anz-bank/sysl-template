@@ -19,7 +19,7 @@ Demo REST Application generated using Sysl-Go
 - curl http://localhost:8080/random-pet-pic or open in browser.
   - Output: `{"name":"white golden retriever","uri":"http://www.example.com/dog/wgr"}`
 
-Congrats! you've just build and run the sysl-go demo application!
+Congrats! You've just built and run the sysl-go demo application!
 
 ## Development
 
