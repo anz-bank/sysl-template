@@ -16,7 +16,7 @@ Demo REST Application generated using Sysl-Go
   - This builds the generated code using the installed Go runtime.
 - run `make run`.
   - This runs the petdemo app and the downstream apps i.e. flickr and petstore
-- curl http://localhost:8080/random-pet-pic or open in browser.
+- `curl http://localhost:8080/random-pet-pic` or open in browser.
   - Output: `{"name":"white golden retriever","uri":"http://www.example.com/dog/wgr"}`
 
 Congrats! You've just built and run the sysl-go demo application!
