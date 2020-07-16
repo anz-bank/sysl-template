@@ -59,7 +59,7 @@ mkdir -p ${RELEASE_DIR}
 # download and extract the executable if it doesn't exist
 if [ ! -e ${RELEASE_EXE} ]; then
     cd "${RELEASE_DIR}" || exit
-    echo "Downloading sysl: ${URL}"
+    >&2 echo "Downloading sysl: ${URL}"
     curl -L --silent ${URL} | tar xz sysl
     cd "$SAVED" || exit
 fi

@@ -59,7 +59,7 @@ mkdir -p "${RELEASE_DIR}"
 # download and extract the executable if it doesn't exist
 if [ ! -e "${RELEASE_EXE}" ]; then
     cd "${RELEASE_DIR}" || exit
-    echo "Downloading arrai: ${URL}"
+    >&2 echo "Downloading arrai: ${URL}"
     curl -L --silent "${URL}" | tar xz arrai
     cd "$SAVED" || exit
 fi

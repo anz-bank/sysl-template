@@ -15,7 +15,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// ListenAndServe func
+// ListenAndServe constructs downstream clients and wires them to serviceRouter.
+// If finally calls RestManager to start serving incoming HTTP Requests.
 func ListenAndServe(cfg *ConfigContainer) error {
 	// construct the mapping from endpoint to handler
 	si := petstore.ServiceInterface{
@@ -40,20 +41,20 @@ func ListenAndServe(cfg *ConfigContainer) error {
 
 	// start the server
 	restManager := newRestManager(cfg, serviceRouter)
-	return core.NewServerParams(context.Background(), "PETSTORE",
+	return core.NewServerParams(context.Background(), "petstore",
 		core.WithPkgLogger(),
 		core.WithRestManager(restManager),
 		core.WithPrometheusRegistry(prometheus.NewRegistry())).Start()
 }
 
-// restManager
+// restManager struct houses the config and handlers for the chosen transports.
 type restManager struct {
 	config              *ConfigContainer
 	enabledHandlers     []handlerinitialiser.HandlerInitialiser
 	enabledGrpcHandlers []handlerinitialiser.GrpcHandlerInitialiser
 }
 
-// newRestManager create new restManager
+// newRestManager creates new restManager.
 func newRestManager(cfg *ConfigContainer, router handlerinitialiser.HandlerInitialiser) *restManager {
 	return &restManager{
 		config:              cfg,
@@ -96,10 +97,7 @@ func (h *restManager) GrpcPublicServerConfig() *config.CommonServerConfig {
 	return &h.config.GenCode.Upstream.GRPC
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * rest gen callback
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
+// restGenCallback struct houses the rest configuration.
 type restGenCallback struct {
 	UpstreamTimeout   time.Duration
 	DownstreamTimeout time.Duration
@@ -107,7 +105,7 @@ type restGenCallback struct {
 	UpstreamConfig    interface{}
 }
 
-// DownStreamTimeoutContext func
+// DownStreamTimeoutContext func attaches DownstreamTimeout to the context.
 func (c restGenCallback) DownstreamTimeoutContext(ctx context.Context) (context.Context, context.CancelFunc) {
 	return context.WithTimeout(ctx, c.DownstreamTimeout)
 }
@@ -122,14 +120,14 @@ func (c restGenCallback) MapError(context.Context, error) *common.HTTPError {
 	return nil
 }
 
-// AddMiddleware func
+// AddMiddleware func adds a new middleware to the router.
 func (c restGenCallback) AddMiddleware(ctx context.Context, r chi.Router) {
 	r.Use(
 		common.Timeout(ctx, c.UpstreamTimeout, http.HandlerFunc(c.timeoutHandler)),
 	)
 }
 
-// BasePath func
+// BasePath func fetches the basepath.
 func (c restGenCallback) BasePath() string {
 	if c.RouterBasePath == "" {
 		return "/"
@@ -137,7 +135,7 @@ func (c restGenCallback) BasePath() string {
 	return c.RouterBasePath
 }
 
-// Timeout handler
+// timeoutHandler func creates a new timeoutHandler.
 func (c restGenCallback) timeoutHandler(w http.ResponseWriter, r *http.Request) {
 	common.HandleError(r.Context(), w, common.InternalError, "timeout expired while processing response", nil,
 		func(ctx context.Context, err error) *common.HTTPError {
