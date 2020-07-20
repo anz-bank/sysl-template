@@ -1,13 +1,12 @@
 
 
- | )
-# petdemo.sysl
+
+# project.sysl
 
 | Package |
 ----|
-[Petdemo](Petdemo/README.md)|
-[flickr](flickr/README.md)|
-[petstore](petstore/README.md)|
+[jsonplaceholder](jsonplaceholder/README.md)|
+[simple](simple/README.md)|
 
 ## Integration Diagram
 <img src="integration.svg">
