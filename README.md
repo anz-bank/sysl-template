@@ -4,10 +4,9 @@ Demo REST Application generated using Sysl-Go
 
 ## Prerequisites
 
-- [Go 1.14](https://golang.org/doc/install)
 - [Sysl v0.140.0 or later ](https://sysl.io/docs/install/)
 - [Arr.ai v0.87.0 or later](https://github.com/arr-ai/arrai)
-- [sysl-catalog (optional)](https://github.com/anz-bank/sysl-catalog)
+- [Go 1.14](https://golang.org/doc/install)
 
 ## Building & Running
 
