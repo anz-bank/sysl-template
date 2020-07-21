@@ -22,10 +22,12 @@ all: setup gen downstream format
 # try to clone, then try to fetch and pull
 setup:
 	# Syncing server-lib to $(SERVERLIB)
+	sysl pb --mode json api/project.sysl > api/project.json
 	git clone --depth 1 --branch joshcarp/arrai-fix https://github.com/anz-bank/sysl-go/ $(SERVERLIB) || true  # Don't fail
 	cd $(SERVERLIB) && git pull
 	$(foreach path, $(deps), $(shell mkdir -p ${outdir}/$(path)))
     $(foreach path, $(apps), $(shell mkdir -p ${outdir}/$(path)))
+	
 
 # Generate files with internal git service
 gen:
