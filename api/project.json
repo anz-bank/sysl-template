@@ -1,0 +1,387 @@
+{
+ "apps":  {
+  "jsonplaceholder":  {
+   "name":  {
+    "part":  [
+     "jsonplaceholder"
+    ]
+   },
+   "longName":  "jsonplaceholder",
+   "attrs":  {
+    "description":  {
+     "s":  "No description.\n"
+    },
+    "host":  {
+     "s":  "jsonplaceholder"
+    },
+    "package":  {
+     "s":  "jsonplaceholder"
+    },
+    "version":  {
+     "s":  "1.0"
+    }
+   },
+   "endpoints":  {
+    "GET /todos/{id}":  {
+     "name":  "GET /todos/{id}",
+     "docstring":  "Returns request data, including method used.",
+     "attrs":  {
+      "patterns":  {
+       "a":  {
+        "elt":  [
+         {
+          "s":  "rest"
+         }
+        ]
+       }
+      }
+     },
+     "stmt":  [
+      {
+       "ret":  {
+        "payload":  "ok <: todosResponse"
+       }
+      }
+     ],
+     "restParams":  {
+      "method":  "GET",
+      "path":  "/todos/{id}",
+      "urlParam":  [
+       {
+        "name":  "id",
+        "type":  {
+         "primitive":  "INT",
+         "sourceContext":  {
+          "file":  "./jsonplaceholder.json",
+          "start":  {
+           "line":  13,
+           "col":  11
+          },
+          "end":  {
+           "line":  13,
+           "col":  19
+          }
+         }
+        }
+       }
+      ]
+     },
+     "sourceContext":  {
+      "file":  "./jsonplaceholder.json",
+      "start":  {
+       "line":  14,
+       "col":  8
+      },
+      "end":  {
+       "line":  21,
+       "col":  4
+      }
+     }
+    }
+   },
+   "types":  {
+    "todosResponse":  {
+     "tuple":  {
+      "attrDefs":  {
+       "completed":  {
+        "primitive":  "BOOL",
+        "attrs":  {
+         "json_tag":  {
+          "s":  "completed"
+         }
+        },
+        "opt":  true,
+        "sourceContext":  {
+         "file":  "./jsonplaceholder.json",
+         "start":  {
+          "line":  23,
+          "col":  21
+         },
+         "end":  {
+          "line":  24,
+          "col":  8
+         }
+        }
+       },
+       "id":  {
+        "primitive":  "FLOAT",
+        "attrs":  {
+         "json_tag":  {
+          "s":  "id"
+         }
+        },
+        "opt":  true,
+        "sourceContext":  {
+         "file":  "./jsonplaceholder.json",
+         "start":  {
+          "line":  25,
+          "col":  14
+         },
+         "end":  {
+          "line":  26,
+          "col":  8
+         }
+        }
+       },
+       "title":  {
+        "primitive":  "STRING",
+        "attrs":  {
+         "json_tag":  {
+          "s":  "title"
+         }
+        },
+        "opt":  true,
+        "sourceContext":  {
+         "file":  "./jsonplaceholder.json",
+         "start":  {
+          "line":  27,
+          "col":  17
+         },
+         "end":  {
+          "line":  28,
+          "col":  8
+         }
+        }
+       },
+       "userId":  {
+        "primitive":  "FLOAT",
+        "attrs":  {
+         "json_tag":  {
+          "s":  "userId"
+         }
+        },
+        "opt":  true,
+        "sourceContext":  {
+         "file":  "./jsonplaceholder.json",
+         "start":  {
+          "line":  29,
+          "col":  18
+         },
+         "end":  {
+          "line":  30
+         }
+        }
+       }
+      }
+     },
+     "sourceContext":  {
+      "file":  "./jsonplaceholder.json",
+      "start":  {
+       "line":  21,
+       "col":  4
+      },
+      "end":  {
+       "line":  30
+      }
+     }
+    }
+   },
+   "sourceContext":  {
+    "file":  "./jsonplaceholder.json",
+    "start":  {
+     "line":  7,
+     "col":  1
+    },
+    "end":  {
+     "line":  7,
+     "col":  16
+    }
+   }
+  },
+  "project":  {
+   "name":  {
+    "part":  [
+     "project"
+    ]
+   },
+   "attrs":  {
+    "patterns":  {
+     "a":  {
+      "elt":  [
+       {
+        "s":  "ignore"
+       }
+      ]
+     }
+    }
+   },
+   "endpoints":  {
+    "_":  {
+     "name":  "_",
+     "stmt":  [
+      {
+       "action":  {
+        "action":  "simple"
+       }
+      },
+      {
+       "action":  {
+        "action":  "jsonplaceholder"
+       }
+      }
+     ],
+     "sourceContext":  {
+      "file":  "project.sysl",
+      "start":  {
+       "line":  7,
+       "col":  4
+      },
+      "end":  {
+       "line":  10,
+       "col":  6
+      }
+     }
+    }
+   },
+   "sourceContext":  {
+    "file":  "project.sysl",
+    "start":  {
+     "line":  6,
+     "col":  1
+    },
+    "end":  {
+     "line":  6,
+     "col":  15
+    }
+   }
+  },
+  "simple":  {
+   "name":  {
+    "part":  [
+     "simple"
+    ]
+   },
+   "attrs":  {
+    "package":  {
+     "s":  "simple"
+    }
+   },
+   "endpoints":  {
+    "GET /":  {
+     "name":  "GET /",
+     "attrs":  {
+      "patterns":  {
+       "a":  {
+        "elt":  [
+         {
+          "s":  "rest"
+         }
+        ]
+       }
+      }
+     },
+     "stmt":  [
+      {
+       "ret":  {
+        "payload":  "ok <: Welcome"
+       }
+      }
+     ],
+     "restParams":  {
+      "method":  "GET",
+      "path":  "/"
+     },
+     "sourceContext":  {
+      "file":  "project.sysl",
+      "start":  {
+       "line":  15,
+       "col":  8
+      },
+      "end":  {
+       "line":  17,
+       "col":  4
+      }
+     }
+    },
+    "GET /foobar":  {
+     "name":  "GET /foobar",
+     "attrs":  {
+      "patterns":  {
+       "a":  {
+        "elt":  [
+         {
+          "s":  "rest"
+         }
+        ]
+       }
+      }
+     },
+     "stmt":  [
+      {
+       "call":  {
+        "target":  {
+         "part":  [
+          "jsonplaceholder"
+         ]
+        },
+        "endpoint":  "GET /todos/{id}"
+       }
+      },
+      {
+       "ret":  {
+        "payload":  "ok <: jsonplaceholder.todosResponse"
+       }
+      }
+     ],
+     "restParams":  {
+      "method":  "GET",
+      "path":  "/foobar"
+     },
+     "sourceContext":  {
+      "file":  "project.sysl",
+      "start":  {
+       "line":  18,
+       "col":  8
+      },
+      "end":  {
+       "line":  25
+      }
+     }
+    }
+   },
+   "types":  {
+    "Welcome":  {
+     "tuple":  {
+      "attrDefs":  {
+       "Content":  {
+        "primitive":  "STRING",
+        "sourceContext":  {
+         "file":  "project.sysl",
+         "start":  {
+          "line":  13,
+          "col":  19
+         },
+         "end":  {
+          "line":  13,
+          "col":  19
+         }
+        }
+       }
+      }
+     },
+     "sourceContext":  {
+      "file":  "project.sysl",
+      "start":  {
+       "line":  12,
+       "col":  4
+      },
+      "end":  {
+       "line":  14,
+       "col":  4
+      }
+     }
+    }
+   },
+   "sourceContext":  {
+    "file":  "project.sysl",
+    "start":  {
+     "line":  10,
+     "col":  1
+    },
+    "end":  {
+     "line":  10
+    }
+   }
+  }
+ }
+}
