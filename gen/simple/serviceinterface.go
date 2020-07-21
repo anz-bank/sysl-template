@@ -27,15 +27,10 @@ type GetFoobarListClient struct {
 	GetTodos func(ctx context.Context, req *jsonplaceholder.GetTodosRequest) (*jsonplaceholder.TodosResponse, error)
 }
 
-// PostBob Client
-type PostBobClient struct {
-}
-
 // ServiceInterface for simple
 type ServiceInterface struct {
 	Get           func(ctx context.Context, req *GetRequest, client GetClient) (*Welcome, error)
 	GetFoobarList func(ctx context.Context, req *GetFoobarListRequest, client GetFoobarListClient) (*jsonplaceholder.TodosResponse, error)
-	PostBob       func(ctx context.Context, req *PostBobRequest, client PostBobClient) (*Welcome, error)
 }
 
 // DownstreamConfig for simple

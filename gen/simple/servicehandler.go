@@ -15,19 +15,20 @@ import (
 type Handler interface {
 	GetHandler(w http.ResponseWriter, r *http.Request)
 	GetFoobarListHandler(w http.ResponseWriter, r *http.Request)
-	PostBobHandler(w http.ResponseWriter, r *http.Request)
 }
 
 // ServiceHandler for simple API
 type ServiceHandler struct {
-	genCallback                           core.RestGenCallback
-	serviceInterface                      *ServiceInterface
-	jsonplaceholderjsonplaceholderService jsonplaceholder.Service
+	genCallback      core.RestGenCallback
+	serviceInterface *ServiceInterface
+
+	jsonplaceholderJsonplaceholderService jsonplaceholder.Service
 }
 
 // NewServiceHandler for simple
-func NewServiceHandler(genCallback core.RestGenCallback, serviceInterface *ServiceInterface, jsonplaceholderjsonplaceholderService jsonplaceholder.Service) *ServiceHandler {
-	return &ServiceHandler{genCallback, serviceInterface, jsonplaceholderjsonplaceholderService}
+func NewServiceHandler(genCallback core.RestGenCallback, serviceInterface *ServiceInterface, jsonplaceholderJsonplaceholderService jsonplaceholder.Service) *ServiceHandler {
+
+	return &ServiceHandler{genCallback, serviceInterface, jsonplaceholderJsonplaceholderService}
 }
 
 // GetHandler ...
@@ -53,11 +54,15 @@ func (s *ServiceHandler) GetHandler(w http.ResponseWriter, r *http.Request) {
 
 	welcome, err := s.serviceInterface.Get(ctx, &req, client)
 	if err != nil {
+
 		common.HandleError(ctx, w, common.DownstreamUnexpectedResponseError, "Downstream failure", err, s.genCallback.MapError)
 		return
 	}
 
 	headermap, httpstatus := common.RespHeaderAndStatusFromContext(ctx)
+	if headermap.Get("Content-Type") == "" {
+		headermap.Set("Content-Type", "application/json")
+	}
 	restlib.SetHeaders(w, headermap)
 	restlib.SendHTTPResponse(w, httpstatus, welcome)
 }
@@ -82,48 +87,20 @@ func (s *ServiceHandler) GetFoobarListHandler(w http.ResponseWriter, r *http.Req
 	}
 
 	client := GetFoobarListClient{
-		GetTodos: s.jsonplaceholderjsonplaceholderService.GetTodos,
+		GetTodos: s.jsonplaceholderJsonplaceholderService.GetTodos,
 	}
 
 	todosresponse, err := s.serviceInterface.GetFoobarList(ctx, &req, client)
 	if err != nil {
+
 		common.HandleError(ctx, w, common.DownstreamUnexpectedResponseError, "Downstream failure", err, s.genCallback.MapError)
 		return
 	}
 
 	headermap, httpstatus := common.RespHeaderAndStatusFromContext(ctx)
+	if headermap.Get("Content-Type") == "" {
+		headermap.Set("Content-Type", "application/json")
+	}
 	restlib.SetHeaders(w, headermap)
 	restlib.SendHTTPResponse(w, httpstatus, todosresponse)
-}
-
-// PostBobHandler ...
-func (s *ServiceHandler) PostBobHandler(w http.ResponseWriter, r *http.Request) {
-	if s.serviceInterface.PostBob == nil {
-		common.HandleError(r.Context(), w, common.InternalError, "not implemented", nil, s.genCallback.MapError)
-		return
-	}
-
-	ctx := common.RequestHeaderToContext(r.Context(), r.Header)
-	ctx = common.RespHeaderAndStatusToContext(ctx, make(http.Header), http.StatusOK)
-	var req PostBobRequest
-
-	ctx, cancel := s.genCallback.DownstreamTimeoutContext(ctx)
-	defer cancel()
-	valErr := validator.Validate(&req)
-	if valErr != nil {
-		common.HandleError(ctx, w, common.BadRequestError, "Invalid request", valErr, s.genCallback.MapError)
-		return
-	}
-
-	client := PostBobClient{}
-
-	welcome, err := s.serviceInterface.PostBob(ctx, &req, client)
-	if err != nil {
-		common.HandleError(ctx, w, common.DownstreamUnexpectedResponseError, "Downstream failure", err, s.genCallback.MapError)
-		return
-	}
-
-	headermap, httpstatus := common.RespHeaderAndStatusFromContext(ctx)
-	restlib.SetHeaders(w, headermap)
-	restlib.SendHTTPResponse(w, httpstatus, welcome)
 }

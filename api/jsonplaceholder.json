@@ -28,7 +28,7 @@
             "200": {
               "description": "OK",
               "schema": {
-                "$ref": "todosResponse"
+                "$ref": "#/definitions/todosResponse"
               }
             }
           },

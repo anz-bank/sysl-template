@@ -32,7 +32,6 @@ func NewClient(client *http.Client, serviceURL string) *Client {
 func (s *Client) GetTodos(ctx context.Context, req *GetTodosRequest) (*TodosResponse, error) {
 	required := []string{}
 	var okResponse TodosResponse
-
 	u, err := url.Parse(fmt.Sprintf("%s/todos/%v", s.url, req.ID))
 	if err != nil {
 		return nil, common.CreateError(ctx, common.InternalError, "failed to parse url", err)
@@ -46,7 +45,6 @@ func (s *Client) GetTodos(ctx context.Context, req *GetTodosRequest) (*TodosResp
 	if result.HTTPResponse.StatusCode == http.StatusUnauthorized {
 		return nil, common.CreateDownstreamError(ctx, common.DownstreamUnauthorizedError, result.HTTPResponse, result.Body, nil)
 	}
-
 	OkTodosResponseResponse, ok := result.Response.(*TodosResponse)
 	if ok {
 		valErr := validator.Validate(OkTodosResponseResponse)
