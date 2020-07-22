@@ -14,27 +14,25 @@ basepath = github.com/anz-bank/sysl-template
 #                                                                  #
 #                                                                  #
 ####################################################################
-
-SERVERLIB = /var/tmp/sysl-go
+SYSL_GO=anzbank/sysl-go:v0.59.0
+SYSL=anzbank/sysl:v0.152.0
 .PHONY: setup gen downstream
 all: setup gen downstream format
 
 # try to clone, then try to fetch and pull
 setup:
-	# Syncing server-lib to $(SERVERLIB)
-	sysl pb --mode json api/project.sysl > api/project.json
-	git clone --depth 1 --branch joshcarp/arrai-fix https://github.com/anz-bank/sysl-go/ $(SERVERLIB) || true  # Don't fail
-	cd $(SERVERLIB) && git pull
+	docker run -v $$(pwd):/mount:ro $(SYSL) pb --mode json /mount/api/project.sysl > api/project.json
 	$(foreach path, $(deps), $(shell mkdir -p ${outdir}/$(path)))
     $(foreach path, $(apps), $(shell mkdir -p ${outdir}/$(path)))
 	
 
 # Generate files with internal git service
 gen:
-	$(foreach app, $(apps), $(shell $(SERVERLIB)/codegen/arrai/service.arrai $(basepath)/$(outdir) api/project.json $(app) rest-app | tar xf - -C $(outdir)/$(app)))
+	$(foreach app, $(apps), $(shell echo "docker run --rm -v $$(pwd):/mount:ro  $(SYSL_GO) /sysl-go/codegen/arrai/service.arrai $(basepath)/$(outdir) /mount/api/project.json $(app) rest-app | tar xf - -C $(outdir)/$(app)"))
 
 downstream:
-	$(foreach app, $(deps), $(shell $(SERVERLIB)/codegen/arrai/service.arrai $(basepath)/$(outdir) api/project.json $(app) rest-client | tar xf - -C $(outdir)/$(app)))
+	$(foreach app, $(deps), $(shell docker run --rm -v $$(pwd):/mount:ro $(SYSL_GO) /sysl-go/codegen/arrai/service.arrai $(basepath)/$(outdir) /mount/api/project.json $(app) rest-client | tar xf - -C $(outdir)/$(app)))
+
 .PHONY: format
 format:
 	$(foreach path, $(deps), $(shell gofmt -s -w ${outdir}/${path}/))
